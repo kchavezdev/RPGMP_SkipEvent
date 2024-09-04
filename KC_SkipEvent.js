@@ -28,7 +28,7 @@
  * @target MZ
  * @base PluginCommonBase
  *
- * @plugindesc [v1.0]Allow certain events to be skipped.
+ * @plugindesc [v1.0.1]Allow certain events to be skipped.
  *
  * @help
  * KC_SkipEvent.js
@@ -38,6 +38,8 @@
  * Changelog:
  *     v1.0.0 - 2023/02/08
  *       - Initial release
+ *     v1.0.1 - 2024/09/03
+ *       - Fix scrolling text not being hidden after event skip
  * 
  * ----------------------------------------------------------------------------
  * 
