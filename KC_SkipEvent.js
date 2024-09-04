@@ -670,6 +670,7 @@ KCDev.SkipEvent.requestSkip = function () {
 };
 
 KCDev.SkipEvent._forceCloseMessage = false;
+KCDev.SkipEvent._forceCloseScrollableMessage = false;
 
 KCDev.SkipEvent.messageCloseRequested = function () {
     return this._forceCloseMessage;
@@ -682,6 +683,18 @@ KCDev.SkipEvent.clearMessageCloseRequest = function () {
 KCDev.SkipEvent.requestMessageClose = function () {
     // console.debug("MESSAGE CLOSE REQUESTED");
     this._forceCloseMessage = true;
+};
+
+KCDev.SkipEvent.scrollMessageCloseRequested = function () {
+    return this._forceCloseScrollableMessage;
+};
+
+KCDev.SkipEvent.clearScrollMessageCloseRequest = function () {
+    this._forceCloseScrollableMessage = false;
+};
+
+KCDev.SkipEvent.requestScrollMessageClose = function () {
+    this._forceCloseScrollableMessage = true;
 };
 
 KCDev.SkipEvent.reinitEvent = function (eventId) {
@@ -892,9 +905,22 @@ Window_Message.prototype.update = function () {
         this._pauseSkip = true;
         this.terminateMessage();
         this._textState = null;
+        KCDev.SkipEvent.requestScrollMessageClose();
     }
 
     KCDev.SkipEvent.clearMessageCloseRequest();
+};
+
+// allow event skip to force close message box
+KCDev.SkipEvent.Window_ScrollText_update = Window_ScrollText.prototype.update;
+Window_ScrollText.prototype.update = function () {
+    KCDev.SkipEvent.Window_ScrollText_update.apply(this, arguments);
+
+    if (KCDev.SkipEvent.scrollMessageCloseRequested() && this.visible) {
+        this.terminateMessage();
+    }
+
+    KCDev.SkipEvent.clearScrollMessageCloseRequest();
 };
 
 // don't progress message box while trying to skip event.
