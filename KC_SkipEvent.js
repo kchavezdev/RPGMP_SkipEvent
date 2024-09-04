@@ -24,7 +24,7 @@
 
 /*:
  * @author K. Chavez 
- * @url https://github.com/kchavezdev/RMMZ-Plugins
+ * @url https://github.com/kchavezdev/RPGMP_SkipEvent
  * @target MZ
  * @base PluginCommonBase
  *
